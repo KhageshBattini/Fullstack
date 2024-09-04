@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>I am para 1 tag</p>
+    <h2>I am h2 tag</h2>
+    <p>I am para 2 tag</p>
+    <h1>I am div tag</h1>
+    <p>this is para 3 tag</p>
+  </body>
+</html>
+
+<script>
+  let para = document.getElementsByTagName("p");
+  console.log(para); //this returns us an array of p tag
+  for (let i = 0; i < para.length; i++) {
+    console.log(para[i]);
+  }
+
+  let h2 = document.getElementsByTagName("h2");
+
+  //applying styles on elements from js
+  console.log(h2);
+  h2[0].style.color = "red";
+  h2[0].style.fontSize = "60px";
+</script>
