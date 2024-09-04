@@ -9,8 +9,28 @@
     <div id="links">
         <div><a href="./index.html">Home</a></div>
         <div><a href="./application.html">Applied Jobs</a></div>
-        <div><a href="">Bookmarks</a></div>
+        <div><a href="./bookmarks.html">Bookmarks</a></div>
      </div>
+
+     <!-- sort by name -->
+     <select id="sortNames" onChange="handleNameSort()">
+        <option value="">Sort by Name</option>
+        <option value="asc">Ascending</option>
+        <option value="dsc">Descending</option>
+     </select>
+     <!-- sort by salary -->
+     <select id="sortSalary" onChange="handleSalarySort()">
+        <option value="">Sort by Salary</option>
+        <option value="LTH">Low to High</option>
+        <option value="HTL">High to Low</option>
+     </select>
+     <!-- filter role -->
+     <select id="filterRole" onChange="handleFilter()">
+        <option value="">Filter Category</option>
+        <option value="fsd">FSD</option>
+        <option value="frontend">FrontEnd</option>
+        <option value="backend">Backend</option>
+     </select>
 
      <main>
         <table border="1">
@@ -35,23 +55,102 @@
     
 let jobArr=JSON.parse(localStorage.getItem("jobList"));
 
-jobArr.forEach(element => {
-let tr= document.createElement("tr");
+displayData(jobArr); 
+let bookMarkArr= JSON.parse(localStorage.getItem("bookmarks")) || [];
+function bookMarkFun(element){
+    bookMarkArr.push(element);
+    localStorage.setItem("bookmarks", JSON.stringify(bookMarkArr));
+}
 
-let td1=document.createElement("td");
-td1.innerText=element.personName;
-let td2=document.createElement("td");
-td2.innerText=element.personEmail;
-let td3=document.createElement("td");
-td3.innerText=element.personRole;
-let td4=document.createElement("td");
-td4.innerText=element.personSalary;
-let td5=document.createElement("td");
-td5.innerText="Bookmark";
+//logic for filter
+function handleFilter(){
+    let selectedValue = document.getElementById("filterRole").value;
 
-tr.append(td1,td2,td3,td4,td5);
+    let filteredArray= jobArr.filter(function (element){
+        return element.personRole === selectedValue;
+    });
 
-document.querySelector("tbody").append(tr);
-});
+    document.querySelector("tbody").innerHTML="";
+    displayData(filteredArray);
+}
 
+//sorting salary
+function handleSalarySort(){
+    let selectedValue = document.getElementById("sortSalary").value;
+
+    if(selectedValue==="LTH"){
+        jobArr.sort(function(a,b){
+            return a.personSalary-b.personSalary;
+        });
+        displayData(jobArr);
+    }
+    if(selectedValue==="HTL"){
+        jobArr.sort(function(a,b){
+            return b.personSalary-a.personSalary;
+        });
+        displayData(jobArr);
+    }
+}
+
+// sorting name
+function handleNameSort(){
+    let selectedName=document.getElementById("sortNames").value;
+
+    if(selectedName==="asc"){
+        jobArr.sort(function(a,b){
+//based on ascii value it will sort the values even it is number of string.for every number or string there will be individual ascii value.
+            let x= a.personName.toUpperCase();
+            let y= b.personName.toUpperCase();
+            if(x>y){
+                return 1;
+            }
+            if(x<y){
+                return -1;
+            }
+            return 0;
+        });
+        displayData(jobArr);
+    }
+    if(selectedName==="dsc"){
+        jobArr.sort(function(a,b){
+            let x= a.personName.toUpperCase();
+            let y= b.personName.toUpperCase();
+            if(x>y){
+                return -1;
+            }
+            if(x<y){
+                return 1;
+            }
+            return 0;
+        });
+        displayData(jobArr);
+    }
+}
+
+
+function displayData(data){
+    document.querySelector("tbody").innerHTML="";
+
+    data.forEach(function(element){
+    let tr= document.createElement("tr");
+    
+    let td1=document.createElement("td");
+    td1.innerText=element.personName;
+    let td2=document.createElement("td");
+    td2.innerText=element.personEmail;
+    let td3=document.createElement("td");
+    td3.innerText=element.personRole;
+    let td4=document.createElement("td");
+    td4.innerText=element.personSalary;
+    let td5=document.createElement("td");
+    td5.innerText="Bookmark";
+    td5.addEventListener("click", function(){
+        bookMarkFun(element);  
+    })
+
+    tr.append(td1,td2,td3,td4,td5);
+
+    document.querySelector("tbody").append(tr);
+    });
+}
 </script>

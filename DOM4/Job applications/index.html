@@ -10,7 +10,7 @@
      <div id="links">
         <div><a href="./index.html">Home</a></div>
         <div><a href="./application.html">Applied Jobs</a></div>
-        <div><a href="">Bookmarks</a></div>
+        <div><a href="./bookmarks.html">Bookmarks</a></div>
      </div>
 
      <!-- form filling -->
@@ -40,7 +40,8 @@ let jobArr;
 
 if(localStorage.getItem("jobList") !== null){
     jobArr= JSON.parse(localStorage.getItem("jobList"));
-    //json.parse is used to convert json data to object data
+    //JSON.parse is used to convert json data to object data
+    //localStorage.getItem("jobList")-- to access the data from the storage
 }
 else{
     jobArr=[];
@@ -58,6 +59,11 @@ function jobSubmit(){
 
     jobArr.push(jobObj);
 
+    //JSON--- Javascript Object Notation, in this the keys also stored in the form of string
+    // {
+    //     "name": "Khagesh",
+    //     "age": 26
+    // }
     localStorage.setItem("jobList", JSON.stringify(jobArr));
     // when you want to send the data in local storage you should always send the data in json format
 
