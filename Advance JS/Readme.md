@@ -9,3 +9,11 @@ In order to convert to asynchronous way, js alone isn't enough
 we have WEB browser API's which will help it to convert into asynchronous
 
 WEB API's makes js asynchronous programming possible
+WEB browser will give use certain methods which will allow us to use WEB browser API.
+
+1. setTimeout
+2. setInterval
+3. Local Storage
+4. fetch
+
+
